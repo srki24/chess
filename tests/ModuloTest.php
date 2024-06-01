@@ -3,28 +3,43 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Chess\Modulo;
 
 final class ModuloTest extends TestCase
 {
-    public function testNoRest(): void
+
+    #[DataProvider('moduloProvider')]
+    public function testNoRest(bool $expected, int $value, int $modBy): void
     {
-        $this->assertTrue(Modulo::isModulo(52));
+        $this->assertSame(
+            $expected,
+            Modulo::isModulo(value: $value, modBy: $modBy)
+        );
     }
 
-    public function testRest(): void
+    public static function moduloProvider()
     {
-        $this->assertFalse(Modulo::isModulo(52, 3));
+        return [
+            'd1' => [true, 42, 2],
+            'd2' => [true, 21, 7],
+            'd3' => [false, 99, 5],
+            'd4' => [false, 41, 2]
+        ];
     }
 
-    public function testThrowsWhenModByIsText(): void
+    #[DataProvider('moduloErrorProvider')]
+    public function testThrowsWhenModByIsText($value, $modBy): void
     {
         $this->expectException(\Exception::class);
-        Modulo::isModulo(value: 25, modBy: "Hakuna Matata");
+        Modulo::isModulo(value: $value, modBy: $modBy);
     }
-    public function testThrowsWhenValueIsText(): void
+
+    public static function moduloErrorProvider()
     {
-        $this->expectException(\Exception::class);
-        Modulo::isModulo(value: 25, modBy: "Hakuna Matata");
+        return [
+            'd1' => [25, "Hakuna Matata"],
+            'd2' => ["Hakuna Matata", 25],
+        ];
     }
 }

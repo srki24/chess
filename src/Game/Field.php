@@ -11,7 +11,7 @@ class Field
     public function __construct(
         private int $row,
         private int $col,
-        private ?AbstractPiece $piece
+        private ?AbstractPiece $piece = null
     ) {
     }
 
@@ -34,5 +34,11 @@ class Field
     {
         $this->piece = $piece;
         return $piece;
+    }
+
+    public function __toString(): string
+    {
+        //TODO add string rep for piece
+        return  "Field (row=$this->row) (col=$this->col)";
     }
 }

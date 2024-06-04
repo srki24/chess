@@ -17,5 +17,5 @@ abstract class AbstractPiece
     {
         return $this->color;
     }
-    abstract public function isValidMove(field $fromField, Field $toField): bool;
+    abstract public static function isValidMove(field $fromField, Field $toField): bool;
 }

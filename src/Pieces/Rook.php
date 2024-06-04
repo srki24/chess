@@ -9,8 +9,10 @@ use Chess\Game\Field;
 class Rook extends AbstractPiece
 {
 
-    public function isValidMove(Field $fromField, Field $toField): bool
+    public static function isValidMove(Field $fromField, Field $toField): bool
     {
-        return true;
+        $sameCol = $fromField->getCol() == $toField->getCol();
+        $sameRow = $fromField->getRow() == $toField->getRow();
+        return $sameRow || $sameCol;
     }
 }

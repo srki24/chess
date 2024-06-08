@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace Chess\Game;
 
-use Chess\Pieces\Rook;
+define("DEFAULT_SIZE", 8);
 
 class Board
 {
 
-    public array $fields;
+    private array $fields;
 
-    public function __construct(private int $size = 8)
+    public function __construct(private int $size = DEFAULT_SIZE)
     {
 
         foreach (range(1, $size) as $row) {
             $this->fields[$row] = [];
             foreach (range(1, $size) as $col) {
-                $this->fields[$row][$col] = new Field($row, $row, null);
+                $this->fields[$row][$col] = new Field($row, $col, null);
             }
         }
     }
@@ -27,15 +27,15 @@ class Board
         return $this->fields[$row][$col];
     }
 
-    public function move(Field $fromField, Field $toField)
+    public function move(Field $fromField, Field $toField): void
     {
-        if(!$this->isExistingField($fromField))
+        if (!$this->isExistingField($fromField))
             throw new \Exception("From $fromField doesn't exist!");
 
-         if(!$this->isExistingField($toField))
+        if (!$this->isExistingField($toField))
             throw new \Exception("To $toField doesn't exist!");
 
-   
+
         $piece = $fromField->getPiece();
         if (!$piece) {
             throw new \Exception("No piece found on this field!");
@@ -54,8 +54,7 @@ class Board
         $row = $field->getRow();
         $col = $field->getCol();
 
-        return 
-        ($row > 0 && $row <= $this->size) &&
+        return ($row > 0 && $row <= $this->size) &&
             ($col > 0 && $col <= $this->size);
     }
 }

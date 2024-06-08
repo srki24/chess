@@ -9,7 +9,7 @@ use Chess\Game\Field;
 abstract class AbstractPiece
 {
     public function __construct(
-        private string $color
+        protected string $color
     ) {
     }
 

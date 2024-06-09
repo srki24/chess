@@ -27,23 +27,23 @@ final class KnightTest extends TestCase
     public static function rookValidMoveProvider()
     {
         return [
-            't1' => [true,  new Field(4, 4),  new Field(2, 3)],
-            't2' => [true,  new Field(4, 4),  new Field(2, 5)],
-            't3' => [true,  new Field(4, 4),  new Field(6, 3)],
-            't4' => [true,  new Field(4, 4),  new Field(6, 5)],
-            't5' => [true,  new Field(4, 4),  new Field(3, 2)],
-            't6' => [true,  new Field(4, 4),  new Field(3, 6)],
-            't7' => [true,  new Field(4, 4),  new Field(5, 2)],
-            't8' => [true,  new Field(4, 4),  new Field(5, 6)],
+            't1' => [true,  new Field('D4'),  new Field('B3')],
+            't2' => [true,  new Field('D4'),  new Field('B5')],
+            't3' => [true,  new Field('D4'),  new Field('F3')],
+            't4' => [true,  new Field('D4'),  new Field('F5')],
+            't5' => [true,  new Field('D4'),  new Field('C2')],
+            't6' => [true,  new Field('D4'),  new Field('C6')],
+            't7' => [true,  new Field('D4'),  new Field('E2')],
+            't8' => [true,  new Field('D4'),  new Field('E6')],
 
-            'f1' => [false, new Field(4, 4), new Field(1, 1)],
-            'f2' => [false, new Field(4, 4), new Field(2, 2)],
-            'f3' => [false, new Field(4, 4), new Field(3, 3)],
-            'f4' => [false, new Field(4, 4), new Field(4, 4)],
-            'f5' => [false, new Field(4, 4), new Field(2, 6)],
-            'f6' => [false, new Field(4, 4), new Field(7, 2)],
-            'f7' => [false, new Field(4, 4), new Field(1, 3)],
-            'f8' => [false, new Field(4, 4), new Field(3, 5)],
+            'f1' => [false, new Field('D4'), new Field('A1')],
+            'f2' => [false, new Field('D4'), new Field('B2')],
+            'f3' => [false, new Field('D4'), new Field('C3')],
+            'f4' => [false, new Field('D4'), new Field('D4')],
+            'f5' => [false, new Field('D4'), new Field('B6')],
+            'f6' => [false, new Field('D4'), new Field('G2')],
+            'f7' => [false, new Field('D4'), new Field('A3')],
+            'f8' => [false, new Field('D4'), new Field('C5')],
         ];
     }
 }

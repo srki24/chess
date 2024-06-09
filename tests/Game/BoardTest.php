@@ -11,59 +11,80 @@ use PHPUnit\Framework\Attributes\DataProvider;
 final class BoardTest extends TestCase
 {
 
-    public function testThrowWhenEmptyField(): void
+    private $board;
+    protected function setUp(): void
     {
-        $b = new Board(); // Empty board
+        $this->board = new Board();
+    }
+
+    public function testMoveThrowWhenMoveFromEmptyField(): void
+    {
         $this->expectException(\Exception::class);
-        $b->move(
-            $b->getField(1, 1),
-            $b->getField(2, 2)
+        $this->board->move(
+            fromField: new Field('A1'),
+            toField: new Field('B2')
         );
     }
 
     public function testValidMove(): void
     {
-        $b = new Board(); // Empty Board
+        // given
+        $rook = new Rook(color: 'WHITE');
+        $fromField = new Field('A1', $rook);
+        $toField = new Field('A2', null);
 
-        $piece = new Rook(color: 'WHITE');
+        // when
+        $this->board->move($fromField, $toField);
 
-        $fromField = $b->getField(1, 1);
-        $fromField->setPiece($piece);
-
-        $toField = $b->getField(1, 2);
-        $b->move($fromField, $toField);
-
-        // Original field empty
+        // then original field empty
         $this->assertNull($fromField->getPiece());
 
-        // Piece moved to the target field
-        $this->assertSame($piece, $toField->getPiece());
+        // and rook moved to the target field
+        $this->assertSame($rook, $toField->getPiece());
     }
 
     #[DataProvider('existingFieldProvider')]
-    public function testIsExistingField(
-        bool $expected,
-        int $boardSize,
-        Field $field
+    public function testValidGetField(
+        Board $board,
+        string $coords
     ): void {
-        $b = new Board($boardSize);
-        $this->assertSame(
-            $expected,
-            $b->isExistingField($field)
+
+        $this->assertEquals(
+            $board->getField($coords),
+            new Field($coords)
         );
     }
 
     public static function existingFieldProvider()
     {
         return [
-            't1' => [true,  8,  new Field(5, 5)],
-            't2' => [true,  8,  new Field(8, 8)],
-            't3' => [true,  3,  new Field(1, 1)],
-            't4' => [true,  20, new Field(15, 15)],
-            'f1' => [false, 8,  new Field(0, 0)],
-            'f2' => [false, 8,  new Field(9, 9)],
-            'f3' => [false, 3,  new Field(4, 4)],
-            'f4' => [false,  20, new Field(22, 22)],
+            'Field(A2)  in Board()'   => [new Board(),   'A2'],
+            'Field(H8)  in Board()'   => [new Board(),   'H8'],
+            'Field(A1)  in Board(3)'  => [new Board(3),  'A1'],
+            'Field(P16) in Board(20)' => [new Board(20), 'P16'],
+        ];
+    }
+
+    #[DataProvider('nonExistingFieldProvider')]
+    public function testGetFieldThrowWhenInvalid(
+        Board $board,
+        string $coords
+    ): void {
+        $this->expectException(\Exception::class);
+
+        $board->getField($coords);
+    }
+
+
+    public static function nonExistingFieldProvider()
+    {
+        return [
+            'Field(I1)  not in Board()'   => [new Board(),  'I1'],
+            'Field(A12) not in Board()'   => [new Board(),  'A12'],
+            'Field(X1)  not in Board()'   => [new Board(),  'X9'],
+            'Field(A9)  not in Board()'   => [new Board(),  'A9'],
+            'Field(D4)  not in Board(3)'  => [new Board(3), 'D4'],
+            'Field(P16) not in Board(15)' => [new Board(15), 'P16'],
         ];
     }
 }

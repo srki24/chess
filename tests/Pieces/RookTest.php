@@ -26,11 +26,11 @@ final class RookTest extends TestCase
     public static function rookValidMoveProvider()
     {
         return [
-            't1' => [true,  new Field(1, 1),  new Field(2, 1)],
-            't2' => [true,  new Field(1, 1),  new Field(1, 2)],
+            't1' => [true,  new Field('A1'),  new Field('B1')],
+            't2' => [true,  new Field('A1'),  new Field('A2')],
             
-            'f1' => [false, new Field(1, 1),  new Field(2, 2)],
-            'f2' => [false, new Field(3, 3),  new Field(2, 1)],
+            'f1' => [false, new Field('A1'),  new Field('B2')],
+            'f2' => [false, new Field('C3'),  new Field('B1')],
         ];
     }
 }

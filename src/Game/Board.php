@@ -4,37 +4,45 @@ declare(strict_types=1);
 
 namespace Chess\Game;
 
+use Chess\Game\Field;
+
 define("DEFAULT_SIZE", 8);
 
 class Board
 {
 
-    private array $fields;
+    /**@var Field[] */
+    public array $fields = [];
 
     public function __construct(private int $size = DEFAULT_SIZE)
     {
 
         foreach (range(1, $size) as $row) {
-            $this->fields[$row] = [];
+            $rank = $row;
+
             foreach (range(1, $size) as $col) {
-                $this->fields[$row][$col] = new Field($row, $col, null);
+                $file = chr((int)($col - 1 + ord("A")));
+                $coords = $file . $rank;
+                array_push($this->fields, new Field($coords));
             }
         }
     }
 
-    public function getField(int $row, int $col): Field
+    public function getField(string $coords): Field
     {
-        return $this->fields[$row][$col];
+
+        $field = array_filter($this->fields, function ($field) use ($coords) {
+            return ($field->getCoordinates() == $coords);
+        });
+
+        if (!$field) {
+            throw new \Exception(("Unknown field coordinates ($coords)!"));
+        }
+        return array_pop($field);
     }
 
     public function move(Field $fromField, Field $toField): void
     {
-        if (!$this->isExistingField($fromField))
-            throw new \Exception("From $fromField doesn't exist!");
-
-        if (!$this->isExistingField($toField))
-            throw new \Exception("To $toField doesn't exist!");
-
 
         $piece = $fromField->getPiece();
         if (!$piece) {
@@ -47,14 +55,5 @@ class Board
 
         $fromField->setPiece(null);
         $toField->setPiece($piece);
-    }
-
-    public function isExistingField(Field $field): bool
-    {
-        $row = $field->getRow();
-        $col = $field->getCol();
-
-        return ($row > 0 && $row <= $this->size) &&
-            ($col > 0 && $col <= $this->size);
     }
 }

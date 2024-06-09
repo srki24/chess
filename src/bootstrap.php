@@ -8,3 +8,5 @@ use Chess\Game\Board;
 
 
 $b = new Board();
+
+echo 1;

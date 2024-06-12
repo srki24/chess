@@ -7,22 +7,50 @@ use Chess\Game\Field;
 use Chess\Pieces\Rook;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 
+#[CoversClass(Board::class)]
+#[UsesClass(Field::class)]
+#[UsesClass(Rook::class)]
 final class BoardTest extends TestCase
 {
 
     private $board;
+    private $rook;
     protected function setUp(): void
     {
         $this->board = new Board();
+        $this->rook = new Rook(color: 'WHITE');
     }
 
     public function testMoveThrowWhenMoveFromEmptyField(): void
     {
         $this->expectException(\Exception::class);
         $this->board->move(
-            fromField: new Field('A1'),
-            toField: new Field('B2')
+            fromField: $this->board->getField('a1'),
+            toField: $this->board->getField('a2')
+        );
+    }
+
+    public function testMoveThrowWhenSameField(): void
+    {
+        $this->board->getField('a1')->setPiece($this->rook);
+
+        $this->expectException(\Exception::class);
+        $this->board->move(
+            fromField: $this->board->getField('a1'),
+            toField: $this->board->getField('a1')
+        );
+    }
+    public function testMoveThrowWhenInvalidMove(): void
+    {
+        $this->board->getField('a1')->setPiece($this->rook);
+
+        $this->expectException(\Exception::class);        
+        $this->board->move(
+            fromField: $this->board->getField('a1'),
+            toField: $this->board->getField('b2')
         );
     }
 

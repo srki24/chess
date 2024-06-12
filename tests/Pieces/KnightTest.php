@@ -6,7 +6,11 @@ use Chess\Game\Field;
 use Chess\Pieces\Knight;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 
+#[CoversClass(Knight::class)]
+#[UsesClass(Field::class)]
 final class KnightTest extends TestCase
 {
 

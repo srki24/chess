@@ -5,7 +5,9 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Chess\Modulo;
+use PHPUnit\Framework\Attributes\CoversClass;
 
+#[CoversClass(Modulo::class)]
 final class ModuloTest extends TestCase
 {
 

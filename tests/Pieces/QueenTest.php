@@ -4,9 +4,17 @@ declare(strict_types=1);
 
 use Chess\Game\Field;
 use Chess\Pieces\Queen;
+use Chess\Pieces\Rook;
+use Chess\Pieces\Bishop;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 
+#[CoversClass(Queen::class)]
+#[UsesClass(Field::class)]
+#[UsesClass(Bishop::class)]
+#[UsesClass(Rook::class)]
 final class QueenTest extends TestCase
 {
 

@@ -33,7 +33,7 @@ class Field
         $this->rank = intval(substr($coordinates, 1)) - 1;
     }
 
-    public function getRow(): int
+    public function getRank(): int
     {
         return $this->rank;
     }
@@ -56,11 +56,5 @@ class Field
     {
         $this->piece = $piece;
         return $piece;
-    }
-
-    public function __toString(): string
-    {
-        //TODO add string rep for piece
-        return  "Field ($this->coordinates)";
     }
 }

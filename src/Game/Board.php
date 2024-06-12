@@ -35,7 +35,7 @@ class Board
         });
 
         if (!$field) {
-            throw new \Exception(("Unknown field coordinates ($coords)!"));
+            throw new \Exception(("Unknown coordinates: ($coords)!"));
         }
         return array_pop($field);
     }

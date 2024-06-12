@@ -12,7 +12,7 @@ class Knight extends AbstractPiece
     public static function isValidMove(Field $fromField, Field $toField): bool
     {
 
-        $rowDelta = abs($fromField->getRow() - $toField->getRow());
+        $rowDelta = abs($fromField->getRank() - $toField->getRank());
         $colDelta = abs($fromField->getFile() - $toField->getFile());
 
         return ($rowDelta === 1 and $colDelta === 2) or ($rowDelta === 2 and $colDelta === 1);

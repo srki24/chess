@@ -12,7 +12,7 @@ class Rook extends AbstractPiece
     public static function isValidMove(Field $fromField, Field $toField): bool
     {
         $sameCol = $fromField->getFile() == $toField->getFile();
-        $sameRow = $fromField->getRow() == $toField->getRow();
+        $sameRow = $fromField->getRank() == $toField->getRank();
         return $sameRow || $sameCol;
     }
 }

@@ -9,11 +9,42 @@ use Chess\Pieces\Knight;
 use Chess\Pieces\Rook;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 
-
+#[CoversClass(Field::class)]
+#[UsesClass(Bishop::class)]
+#[UsesClass(Knight::class)]
+#[UsesClass(Rook::class)]
+#[UsesClass(Field::class)]
 final class FieldTest extends TestCase
 {
 
+    public function testCoordinates(){
+        // given
+        $coordinates = 'a5';
+        $file = 0;
+        $rank = 4;
+
+        $field = new Field($coordinates);
+
+        // then
+        $this->assertSame(
+            $field->getCoordinates(),
+            $coordinates
+        );
+
+        $this->assertSame(
+            $field->getFile(),
+            $file
+        );
+
+        $this->assertSame(
+            $field->getRank(),
+            $rank
+        );
+
+    }
 
     public function testSetPiece()
     {

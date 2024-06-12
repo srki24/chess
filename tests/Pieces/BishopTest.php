@@ -6,6 +6,11 @@ use Chess\Game\Field;
 use Chess\Pieces\Bishop;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
+
+#[CoversClass(Bishop::class)]
+#[UsesClass(Field::class)]
 
 final class BishopTest extends TestCase
 {

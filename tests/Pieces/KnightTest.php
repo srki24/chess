@@ -10,9 +10,9 @@ use PHPUnit\Framework\Attributes\DataProvider;
 final class KnightTest extends TestCase
 {
 
-    #[DataProvider('rookValidMoveProvider')]
+    #[DataProvider('moveProvider')]
 
-    public function testValidMove(
+    public function testMove(
         bool $expected,
         Field $fromField,
         Field $toField
@@ -24,26 +24,26 @@ final class KnightTest extends TestCase
         );
     }
 
-    public static function rookValidMoveProvider()
+    public static function moveProvider()
     {
         return [
-            't1' => [true,  new Field('D4'),  new Field('B3')],
-            't2' => [true,  new Field('D4'),  new Field('B5')],
-            't3' => [true,  new Field('D4'),  new Field('F3')],
-            't4' => [true,  new Field('D4'),  new Field('F5')],
-            't5' => [true,  new Field('D4'),  new Field('C2')],
-            't6' => [true,  new Field('D4'),  new Field('C6')],
-            't7' => [true,  new Field('D4'),  new Field('E2')],
-            't8' => [true,  new Field('D4'),  new Field('E6')],
+            'K d4-b3 (valid)' => [true,  new Field('d4'),  new Field('b3')],
+            'K d4-b5 (valid)' => [true,  new Field('d4'),  new Field('b5')],
+            'K d4-f3 (valid)' => [true,  new Field('d4'),  new Field('f3')],
+            'K d4-f5 (valid)' => [true,  new Field('d4'),  new Field('f5')],
+            'K d4-c2 (valid)' => [true,  new Field('d4'),  new Field('c2')],
+            'K d4-c6 (valid)' => [true,  new Field('d4'),  new Field('c6')],
+            'K d4-e2 (valid)' => [true,  new Field('d4'),  new Field('e2')],
+            'K d4-e6 (valid)' => [true,  new Field('d4'),  new Field('e6')],
 
-            'f1' => [false, new Field('D4'), new Field('A1')],
-            'f2' => [false, new Field('D4'), new Field('B2')],
-            'f3' => [false, new Field('D4'), new Field('C3')],
-            'f4' => [false, new Field('D4'), new Field('D4')],
-            'f5' => [false, new Field('D4'), new Field('B6')],
-            'f6' => [false, new Field('D4'), new Field('G2')],
-            'f7' => [false, new Field('D4'), new Field('A3')],
-            'f8' => [false, new Field('D4'), new Field('C5')],
+            'K a1-d4 (invalid)' => [false, new Field('a1'), new Field('d4')],
+            'K d4-b2 (invalid)' => [false, new Field('d4'), new Field('b2')],
+            'K d4-c3 (invalid)' => [false, new Field('d4'), new Field('c3')],
+            'K d4-d4 (invalid)' => [false, new Field('d4'), new Field('d4')],
+            'K d4-b6 (invalid)' => [false, new Field('d4'), new Field('b6')],
+            'K d4-g2 (invalid)' => [false, new Field('d4'), new Field('g2')],
+            'K d4-a3 (invalid)' => [false, new Field('d4'), new Field('a3')],
+            'K d4-c5 (invalid)' => [false, new Field('d4'), new Field('c5')],
         ];
     }
 }

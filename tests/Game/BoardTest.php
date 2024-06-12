@@ -58,10 +58,10 @@ final class BoardTest extends TestCase
     public static function existingFieldProvider()
     {
         return [
-            'Field(A2)  in Board()'   => [new Board(),   'A2'],
-            'Field(H8)  in Board()'   => [new Board(),   'H8'],
-            'Field(A1)  in Board(3)'  => [new Board(3),  'A1'],
-            'Field(P16) in Board(20)' => [new Board(20), 'P16'],
+            'Field(a2)  in Board()'   => [new Board(),   'a2'],
+            'Field(h8)  in Board()'   => [new Board(),   'h8'],
+            'Field(a1)  in Board(3)'  => [new Board(3),  'a1'],
+            'Field(p16) in Board(20)' => [new Board(20), 'p16'],
         ];
     }
 
@@ -79,12 +79,12 @@ final class BoardTest extends TestCase
     public static function nonExistingFieldProvider()
     {
         return [
-            'Field(I1)  not in Board()'   => [new Board(),  'I1'],
-            'Field(A12) not in Board()'   => [new Board(),  'A12'],
-            'Field(X1)  not in Board()'   => [new Board(),  'X9'],
-            'Field(A9)  not in Board()'   => [new Board(),  'A9'],
-            'Field(D4)  not in Board(3)'  => [new Board(3), 'D4'],
-            'Field(P16) not in Board(15)' => [new Board(15), 'P16'],
+            'Field(i1)  not in Board()'   => [new Board(),   'i1'],
+            'Field(a12) not in Board()'   => [new Board(),   'a12'],
+            'Field(x1)  not in Board()'   => [new Board(),   'x1'],
+            'Field(a9)  not in Board()'   => [new Board(),   'a9'],
+            'Field(d4)  not in Board(3)'  => [new Board(3),  'd4'],
+            'Field(o16) not in Board(15)' => [new Board(15), 'o16'],
         ];
     }
 }

@@ -6,7 +6,7 @@ namespace Chess\Pieces;
 
 use Chess\Game\Field;
 
-class Knight extends AbstractPiece
+class Bishop extends AbstractPiece
 {
 
     public static function isValidMove(Field $fromField, Field $toField): bool
@@ -15,6 +15,6 @@ class Knight extends AbstractPiece
         $rowDelta = abs($fromField->getRow() - $toField->getRow());
         $colDelta = abs($fromField->getFile() - $toField->getFile());
 
-        return ($rowDelta === 1 and $colDelta === 2) or ($rowDelta === 2 and $colDelta === 1);
+        return ($rowDelta ===  $colDelta );
     }
 }

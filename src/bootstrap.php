@@ -9,4 +9,5 @@ use Chess\Game\Board;
 
 $b = new Board();
 
+echo $b->getField('a1');
 echo 1;

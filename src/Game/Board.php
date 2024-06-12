@@ -17,11 +17,10 @@ class Board
     public function __construct(private int $size = DEFAULT_SIZE)
     {
 
-        foreach (range(1, $size) as $row) {
-            $rank = $row;
-
-            foreach (range(1, $size) as $col) {
-                $file = chr((int)($col - 1 + ord("A")));
+        foreach (range(1, $size) as $f) {
+            $file = chr((int)($f - 1 + ord("a")));
+            
+            foreach (range(1, $size) as $rank) {
                 $coords = $file . $rank;
                 array_push($this->fields, new Field($coords));
             }
@@ -30,7 +29,7 @@ class Board
 
     public function getField(string $coords): Field
     {
-
+        $coords = strtolower($coords);
         $field = array_filter($this->fields, function ($field) use ($coords) {
             return ($field->getCoordinates() == $coords);
         });
@@ -43,6 +42,10 @@ class Board
 
     public function move(Field $fromField, Field $toField): void
     {
+
+
+        if ($fromField->getCoordinates() === $toField->getCoordinates())
+            throw new \Exception("A piece must move. You cannot skip a turn!");
 
         $piece = $fromField->getPiece();
         if (!$piece) {

@@ -8,14 +8,14 @@ use Chess\Pieces\AbstractPiece;
 
 class Field
 {
-    private int $row;
-    private int $col;
+    private int $file;
+    private int $rank;
 
     public function __construct(
         private string $coordinates,
         private ?AbstractPiece $piece = null
     ) {
-        $coordinates = strtoupper($coordinates);
+        $coordinates = strtolower($coordinates);
 
         if (strlen($coordinates) < 2) {
             throw new \Exception("Invalid format of the coordinates: $coordinates.");
@@ -29,18 +29,18 @@ class Field
             throw new \Exception("Field rank must be a number: $coordinates");
         }
 
-        $this->row = intval(substr($coordinates, 1));
-        $this->col = 1 + ord($coordinates[0]) - ord("A");
+        $this->file = ord($coordinates[0]) - ord("a");
+        $this->rank = intval(substr($coordinates, 1)) - 1;
     }
 
     public function getRow(): int
     {
-        return $this->row;
+        return $this->rank;
     }
 
-    public function getCol(): int
+    public function getFile(): int
     {
-        return $this->col;
+        return $this->file;
     }
 
     public function getCoordinates(): string
@@ -61,6 +61,6 @@ class Field
     public function __toString(): string
     {
         //TODO add string rep for piece
-        return  "Field (row=$this->row) (col=$this->col)";
+        return  "Field ($this->coordinates)";
     }
 }

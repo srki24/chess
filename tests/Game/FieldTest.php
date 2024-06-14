@@ -96,7 +96,7 @@ final class FieldTest extends TestCase
     }
 
     #[DataProvider('invalidFieldProvider')]
-    public function testInvalidField(
+    public function testThworInvalidField(
         string $coordinates,
         ?AbstractPiece $piece = null
     ) {

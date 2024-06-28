@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Chess\Game\Field;
+use Chess\Pieces\Color;
 use Chess\Pieces\Rook;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -13,6 +14,15 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[UsesClass(Field::class)]
 final class RookTest extends TestCase
 {
+    public function testCreatePiece()
+    {
+        $piece = new Rook(Color::BLACK);
+        $this->assertSame($piece->getColor(), Color::BLACK);
+
+        $piece = new Rook(Color::WHITE);
+        $this->assertSame($piece->getColor(), Color::WHITE);
+    }
+
 
     #[DataProvider('moveProvider')]
     public function testMove(
@@ -50,4 +60,3 @@ final class RookTest extends TestCase
         ];
     }
 }
-

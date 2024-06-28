@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Chess\Game\Board;
 use Chess\Game\Field;
 use Chess\Pieces\Rook;
+use Chess\Pieces\Color;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -13,6 +14,7 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[CoversClass(Board::class)]
 #[UsesClass(Field::class)]
 #[UsesClass(Rook::class)]
+#[UsesClass(Color::class)]
 final class BoardTest extends TestCase
 {
 
@@ -21,7 +23,7 @@ final class BoardTest extends TestCase
     protected function setUp(): void
     {
         $this->board = new Board();
-        $this->rook = new Rook(color: 'WHITE');
+        $this->rook = new Rook(Color::WHITE);
     }
 
     public function testMoveThrowWhenMoveFromEmptyField(): void
@@ -57,7 +59,7 @@ final class BoardTest extends TestCase
     public function testValidMove(): void
     {
         // given
-        $rook = new Rook(color: 'WHITE');
+        $rook = new Rook(Color::WHITE);
         $fromField = new Field('A1', $rook);
         $toField = new Field('A2', null);
 

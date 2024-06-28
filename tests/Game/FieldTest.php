@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Chess\Game\Field;
 use Chess\Pieces\AbstractPiece;
 use Chess\Pieces\Bishop;
+use Chess\Pieces\Color;
 use Chess\Pieces\Knight;
 use Chess\Pieces\Rook;
 use PHPUnit\Framework\TestCase;
@@ -16,7 +17,6 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[UsesClass(Bishop::class)]
 #[UsesClass(Knight::class)]
 #[UsesClass(Rook::class)]
-#[UsesClass(Field::class)]
 final class FieldTest extends TestCase
 {
 
@@ -49,7 +49,7 @@ final class FieldTest extends TestCase
     public function testSetPiece()
     {
         // given
-        $piece = new Bishop('WHITE');
+        $piece = new Bishop(Color::BLACK);
 
         // when
         $field = new Field('a5');
@@ -89,9 +89,9 @@ final class FieldTest extends TestCase
             'Field(b12)'        => ['b12'],
             'Field(c24)'        => ['c24'],
             'Field(d15)'        => ['d15'],
-            'Field(a1, Knight)' => ['a1', new Knight('WHITE')],
-            'Field(d5, Rook)'   => ['d5', new Rook('WHITE')],
-            'Field(d5, Bishop)' => ['d5', new Bishop('BLACK')],
+            'Field(a1, Knight)' => ['a1', new Knight(Color::BLACK)],
+            'Field(d5, Rook)'   => ['d5', new Rook(Color::WHITE)],
+            'Field(d5, Bishop)' => ['d5', new Bishop(Color::BLACK)],
         ];
     }
 

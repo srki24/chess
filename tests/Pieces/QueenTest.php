@@ -6,6 +6,7 @@ use Chess\Game\Field;
 use Chess\Pieces\Queen;
 use Chess\Pieces\Rook;
 use Chess\Pieces\Bishop;
+use Chess\Pieces\Color;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -17,6 +18,15 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[UsesClass(Rook::class)]
 final class QueenTest extends TestCase
 {
+    public function testCreatePiece()
+    {
+        $piece = new Queen(Color::BLACK);
+        $this->assertSame($piece->getColor(), Color::BLACK);
+
+        $piece = new Queen(Color::WHITE);
+        $this->assertSame($piece->getColor(), Color::WHITE);
+    }
+
 
     #[DataProvider('moveProvider')]
     public function testMove(

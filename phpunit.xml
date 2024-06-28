@@ -20,8 +20,5 @@
             <directory>src</directory>
         </include>
 
-        <exclude>
-            <file>src\Pieces\AbstractPiece.php</file>
-        </exclude>
     </source>
 </phpunit>

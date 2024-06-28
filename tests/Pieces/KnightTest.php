@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Chess\Game\Field;
+use Chess\Pieces\Color;
 use Chess\Pieces\Knight;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -13,6 +14,14 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[UsesClass(Field::class)]
 final class KnightTest extends TestCase
 {
+    public function testCreatePiece()
+    {
+        $piece = new Knight(Color::BLACK);
+        $this->assertSame($piece->getColor(), Color::BLACK);
+
+        $piece = new Knight(Color::WHITE);
+        $this->assertSame($piece->getColor(), Color::WHITE);
+    }
 
     #[DataProvider('moveProvider')]
 

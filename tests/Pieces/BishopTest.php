@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Chess\Game\Field;
 use Chess\Pieces\Bishop;
+use Chess\Pieces\Color;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -28,6 +29,14 @@ final class BishopTest extends TestCase
         );
     }
 
+    public function testCreatePiece()
+    {
+        $piece = new Bishop(Color::BLACK);
+        $this->assertSame($piece->getColor(), Color::BLACK);
+
+        $piece = new Bishop(Color::WHITE);
+        $this->assertSame($piece->getColor(), Color::WHITE);
+    }
     public static function moveProvider()
     {
         return [

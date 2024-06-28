@@ -9,11 +9,11 @@ use Chess\Game\Field;
 abstract class AbstractPiece
 {
     public function __construct(
-        protected string $color
+        protected Color $color
     ) {
     }
 
-    public function getColor(): string
+    public function getColor(): Color
     {
         return $this->color;
     }

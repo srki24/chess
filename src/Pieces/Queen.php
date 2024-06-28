@@ -9,9 +9,9 @@ use Chess\Game\Field;
 class Queen extends AbstractPiece
 {
 
-    public static function isValidMove(Field $fromField, Field $toField): bool
+    public function isValidMove(Field $fromField, Field $toField): bool
     {
-        return (Bishop::isValidMove($fromField, $toField) || Rook::isValidMove($fromField, $toField));
-        
+        return (
+            (new Bishop($this->getColor()))->isValidMove($fromField, $toField) || (new Rook($this->getColor()))->isValidMove($fromField, $toField));
     }
 }

@@ -9,7 +9,7 @@ use Chess\Game\Field;
 class Bishop extends AbstractPiece
 {
 
-    public static function isValidMove(Field $fromField, Field $toField): bool
+    public function isValidMove(Field $fromField, Field $toField): bool
     {
 
         $rowDelta = abs($fromField->getRank() - $toField->getRank());

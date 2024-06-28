@@ -14,13 +14,27 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[UsesClass(Field::class)]
 final class RookTest extends TestCase
 {
+    private Rook $whiteRook;
+    private Rook $blackRook;
+
+
+    protected function setUp(): void
+    {
+        $this->whiteRook = new Rook(Color::WHITE);
+        $this->blackRook = new Rook(Color::BLACK);
+    }
+
+    public function testGetColor()
+    {
+        $this->assertSame($this->blackRook->getColor(), Color::BLACK);
+        $this->assertSame($this->whiteRook->getColor(), Color::WHITE);
+    }
+
+
     public function testCreatePiece()
     {
-        $piece = new Rook(Color::BLACK);
-        $this->assertSame($piece->getColor(), Color::BLACK);
-
-        $piece = new Rook(Color::WHITE);
-        $this->assertSame($piece->getColor(), Color::WHITE);
+        $this->assertSame($this->whiteRook->getColor(), Color::WHITE);
+        $this->assertSame($this->blackRook->getColor(), Color::BLACK);
     }
 
 
@@ -33,7 +47,7 @@ final class RookTest extends TestCase
 
         $this->assertSame(
             $expected,
-            Rook::isValidMove($fromField, $toField)
+            $this->whiteRook->isValidMove($fromField, $toField)
         );
     }
 

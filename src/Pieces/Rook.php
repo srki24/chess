@@ -9,7 +9,7 @@ use Chess\Game\Field;
 class Rook extends AbstractPiece
 {
 
-    public static function isValidMove(Field $fromField, Field $toField): bool
+    public function isValidMove(Field $fromField, Field $toField): bool
     {
         $sameCol = $fromField->getFile() == $toField->getFile();
         $sameRow = $fromField->getRank() == $toField->getRank();

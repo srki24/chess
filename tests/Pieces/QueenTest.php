@@ -18,13 +18,19 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[UsesClass(Rook::class)]
 final class QueenTest extends TestCase
 {
-    public function testCreatePiece()
-    {
-        $piece = new Queen(Color::BLACK);
-        $this->assertSame($piece->getColor(), Color::BLACK);
+    private Queen $whiteQueen;
+    private Queen $blackQueen;
 
-        $piece = new Queen(Color::WHITE);
-        $this->assertSame($piece->getColor(), Color::WHITE);
+    protected function setUp(): void
+    {
+        $this->whiteQueen = new Queen(Color::WHITE);
+        $this->blackQueen = new Queen(Color::BLACK);
+    }
+
+    public function testGetColor()
+    {
+        $this->assertSame($this->whiteQueen->getColor(), Color::WHITE);
+        $this->assertSame($this->blackQueen->getColor(), Color::BLACK);
     }
 
 
@@ -37,7 +43,7 @@ final class QueenTest extends TestCase
 
         $this->assertSame(
             $expected,
-            Queen::isValidMove($fromField, $toField)
+            $this->blackQueen->isValidMove($fromField, $toField)
         );
     }
 

@@ -14,18 +14,25 @@ use PHPUnit\Framework\Attributes\UsesClass;
 #[UsesClass(Field::class)]
 final class KnightTest extends TestCase
 {
-    public function testCreatePiece()
-    {
-        $piece = new Knight(Color::BLACK);
-        $this->assertSame($piece->getColor(), Color::BLACK);
 
-        $piece = new Knight(Color::WHITE);
-        $this->assertSame($piece->getColor(), Color::WHITE);
+    private Knight $whiteKnight;
+    private Knight $blackKnight;
+
+    protected function setUp(): void
+    {
+        $this->whiteKnight = new Knight(Color::WHITE);
+        $this->blackKnight = new Knight(Color::BLACK);
+    }
+
+    public function testGetColor()
+    {
+        $this->assertSame($this->whiteKnight->getColor(), Color::WHITE);
+        $this->assertSame($this->blackKnight->getColor(), Color::BLACK);
     }
 
     #[DataProvider('moveProvider')]
 
-    public function testMove(
+    public function testBlackMove(
         bool $expected,
         Field $fromField,
         Field $toField
@@ -33,7 +40,7 @@ final class KnightTest extends TestCase
 
         $this->assertSame(
             $expected,
-            Knight::isValidMove($fromField, $toField)
+            $this->blackKnight->isValidMove($fromField, $toField)
         );
     }
 

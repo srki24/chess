@@ -15,6 +15,21 @@ use PHPUnit\Framework\Attributes\UsesClass;
 
 final class BishopTest extends TestCase
 {
+    private Bishop $whiteBishop;
+    private Bishop $blackBishop;
+
+   protected function setUp(): void
+    {
+        $this->whiteBishop = new Bishop(Color::WHITE);
+        $this->blackBishop = new Bishop(Color::BLACK);
+    }
+
+    public function testGetColor()
+    {
+        $this->assertSame($this->whiteBishop->getColor(), Color::WHITE);
+        $this->assertSame($this->blackBishop->getColor(), Color::BLACK);
+    }
+    
 
     #[DataProvider('moveProvider')]
     public function testMove(
@@ -25,18 +40,10 @@ final class BishopTest extends TestCase
 
         $this->assertSame(
             $expected,
-            Bishop::isValidMove($fromField, $toField)
+            (new Bishop(Color::WHITE))->isValidMove($fromField, $toField)
         );
     }
 
-    public function testCreatePiece()
-    {
-        $piece = new Bishop(Color::BLACK);
-        $this->assertSame($piece->getColor(), Color::BLACK);
-
-        $piece = new Bishop(Color::WHITE);
-        $this->assertSame($piece->getColor(), Color::WHITE);
-    }
     public static function moveProvider()
     {
         return [

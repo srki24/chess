@@ -6,7 +6,7 @@ namespace Chess\Game;
 
 use Chess\Game\Field;
 
-define("DEFAULT_SIZE", 8);
+define("BOARD_SIZE", 8);
 
 class Board
 {
@@ -14,13 +14,12 @@ class Board
     /**@var Field[] */
     public array $fields = [];
 
-    public function __construct(private int $size = DEFAULT_SIZE)
+    public function __construct()
     {
-        foreach (range(1, $size) as $f) {
-            $file = chr((int)($f - 1 + ord("a")));
-            foreach (range(1, $size) as $rank) {
-                $coords = $file . $rank;
-                array_push($this->fields, new Field($coords));
+        foreach (range(0, BOARD_SIZE-1) as $file) {
+            foreach (range(0, BOARD_SIZE-1) as $rank) {
+                $coords = Field::notationFromCoordinates($file, $rank);
+                $this->fields[$coords] = new Field($coords);
             }
         }
     }
@@ -28,19 +27,18 @@ class Board
     public function getField(string $coords): Field
     {
         $coords = strtolower($coords);
-        $field = array_filter($this->fields, function ($field) use ($coords) {
-            return ($field->getCoordinates() == $coords);
-        });
+        if (!array_key_exists($coords, $this->fields)) {
+                throw new \Exception(("Unknown coordinates: ($coords)!"));
+            }
+        
+            $field = $this->fields[$coords];
+        return $field;
 
-        if (!$field) {
-            throw new \Exception(("Unknown coordinates: ($coords)!"));
         }
-        return array_pop($field);
-    }
-
+        
     public function move(Field $fromField, Field $toField): void
     {
-        if ($fromField->getCoordinates() === $toField->getCoordinates())
+        if ($fromField->getNotation() === $toField->getNotation())
             throw new \Exception("A piece must move. You cannot skip a turn!");
 
         $piece = $fromField->getPiece();
@@ -54,5 +52,6 @@ class Board
 
         $fromField->setPiece(null);
         $toField->setPiece($piece);
+        $piece->hasMoved();
     }
 }

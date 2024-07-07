@@ -20,7 +20,8 @@ use PHPUnit\Framework\Attributes\UsesClass;
 final class FieldTest extends TestCase
 {
 
-    public function testCoordinates(){
+    public function testCoordinates()
+    {
         // given
         $coordinates = 'a5';
         $file = 0;
@@ -30,7 +31,7 @@ final class FieldTest extends TestCase
 
         // then
         $this->assertSame(
-            $field->getCoordinates(),
+            $field->getNotation(),
             $coordinates
         );
 
@@ -43,7 +44,6 @@ final class FieldTest extends TestCase
             $field->getRank(),
             $rank
         );
-
     }
 
     public function testSetPiece()
@@ -55,7 +55,7 @@ final class FieldTest extends TestCase
         $field = new Field('a5');
         // then
         $this->assertNull($field->getPiece());
-        
+
         // when
         $field->setPiece($piece);
         // then
@@ -65,21 +65,20 @@ final class FieldTest extends TestCase
         $field->setPiece(null);
         // then
         $this->assertNull($field->getPiece());
-
     }
 
     #[DataProvider('validFieldProvider')]
     public function testValidField(
-        string $coordinates,
+        string $notation,
         ?AbstractPiece $piece = null
     ) {
 
         $field = new Field(
-            coordinates: $coordinates,
+            notation: $notation,
             piece: $piece
         );
 
-        $this->assertSame($field->getCoordinates(), $coordinates);
+        $this->assertSame($field->getNotation(), $notation);
         $this->assertSame($field->getPiece(), $piece);
     }
 
@@ -95,19 +94,19 @@ final class FieldTest extends TestCase
         ];
     }
 
-    #[DataProvider('invalidFieldProvider')]
+    #[DataProvider('invalidNotationProvider')]
     public function testThworInvalidField(
-        string $coordinates,
+        string $notation,
         ?AbstractPiece $piece = null
     ) {
         $this->expectException(\Exception::class);
         $field = new Field(
-            coordinates: $coordinates,
+            notation: $notation,
             piece: $piece
         );
     }
 
-    public static function invalidFieldProvider()
+    public static function invalidNotationProvider()
     {
         return [
             'Field("") empty string' => [''],
@@ -115,6 +114,42 @@ final class FieldTest extends TestCase
             'Field(ab)'              => ['ab'],
             'Field(a1\n)'            => ['a1\n'],
             'Field(1a)'              => ['1a'],
+        ];
+    }
+
+    #[DataProvider('notationProvider')]
+    public function testNotationFromCoordinates(
+        string $notation,
+        int $file,
+        int $rank
+    ) {
+
+        $generatedNotation = Field::notationFromCoordinates($file, $rank);
+        $this->assertSame($generatedNotation, $notation);
+    }
+
+
+    #[DataProvider('notationProvider')]
+    public function testCoordinatesFromNotation(
+        string $notation,
+        int $file,
+        int $rank
+    ) {
+
+        $coords = Field::coordinatesFromNotation($notation);
+
+        $this->assertSame($file, $coords['file']);
+        $this->assertSame($rank, $coords['rank']);
+    }
+
+    public static function notationProvider()
+    {
+        return [
+            'Field(a1)' => ['a1', 0, 0],
+            'Field(b3)' => ['b3', 1, 2],
+            'Field(c4)' => ['c4', 2, 3],
+            'Field(d5)' => ['d5', 3, 4],
+            'Field(h8)' => ['h8', 7, 7],
         ];
     }
 }

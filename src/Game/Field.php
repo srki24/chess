@@ -12,9 +12,16 @@ class Field
     private int $rank;
 
     public function __construct(
-        private string $coordinates,
+        private string $notation,
         private ?AbstractPiece $piece = null
     ) {
+        $coordinates = Field::coordinatesFromNotation($notation);
+        $this->file = $coordinates['file'];
+        $this->rank = $coordinates['rank'];
+    }
+
+    public static function coordinatesFromNotation(string $coordinates): array
+    {
         $coordinates = strtolower($coordinates);
 
         if (strlen($coordinates) < 2) {
@@ -22,15 +29,27 @@ class Field
         }
 
         if (!ctype_alpha($coordinates[0])) {
-            throw new \Exception("Field file must be a string: $coordinates");
+            throw new \Exception("File must be a string: $coordinates");
         }
 
         if (!ctype_digit(substr($coordinates, 1))) {
-            throw new \Exception("Field rank must be a number: $coordinates");
+            throw new \Exception("Rank must be a number: $coordinates");
         }
 
-        $this->file = ord($coordinates[0]) - ord("a");
-        $this->rank = intval(substr($coordinates, 1)) - 1;
+        $file = ord($coordinates[0]) - ord("a");
+        $rank = ord($coordinates[1]) - ord("1");
+        return [
+            'file' => $file,
+            'rank' => $rank
+        ];
+    }
+
+    public static function notationFromCoordinates(int $file, int $rank): string
+    {
+        $fileCoord = chr($file + ord("a"));
+        $rankCoord = chr($rank + ord("1"));
+   
+        return $fileCoord . $rankCoord;
     }
 
     public function getRank(): int
@@ -43,9 +62,9 @@ class Field
         return $this->file;
     }
 
-    public function getCoordinates(): string
+    public function getNotation(): string
     {
-        return $this->coordinates;
+        return $this->notation;
     }
     public function getPiece(): ?AbstractPiece
     {
@@ -56,5 +75,10 @@ class Field
     {
         $this->piece = $piece;
         return $piece;
+    }
+
+    public function isOccupied(): bool
+    {
+        return is_bool($this->piece);
     }
 }

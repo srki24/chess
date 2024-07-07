@@ -34,7 +34,8 @@ final class PawnTest extends TestCase
     }
 
 
-    #[DataProvider('whiteMoveProvider')]
+    #[DataProvider('invalidMoveProvider')]
+    #[DataProvider('validMoveProvider')]
     public function testWhiteMove(
         bool $expected,
         Field $fromField,
@@ -43,30 +44,45 @@ final class PawnTest extends TestCase
 
         $this->assertSame(
             $expected,
-            $this->whitePawn->isValidMove($fromField, $toField)
+            $fromField->getPiece()->isValidMove($fromField, $toField)
         );
+        // var_dump($this->whitePawn->hasMoved);
     }
 
-    public static function whiteMoveProvider()
+    public static function validMoveProvider()
     {
-        return [
-            'P b2-b3 (valid)' => [true,  new Field('b2'),  new Field('b3')],
-            'P b2-a4 (valid)' => [true,  new Field('b2'),  new Field('a3')],
-            'P b2-c3 (valid)' => [true,  new Field('b2'),  new Field('c3')],
-            'P d2-d4 (valid)' => [true,  new Field('d2'),  new Field('d4')],
-            'P h5-h6 (valid)' => [true,  new Field('h5'),  new Field('h6')],
-            'P h6-e7 (valid)' => [true,  new Field('h6'),  new Field('e7')],
-            'P g7-g8 (valid)' => [true,  new Field('g7'),  new Field('g8')],
-            'P g2-g4 (valid)' => [true,  new Field('g2'),  new Field('g4')],
+        $whitePawn = new Pawn(Color::WHITE);
+        $blackPawn = new Pawn(Color::BLACK);
 
-            'P a3-a5 (invalid)' => [false, new Field('a3'), new Field('a5')],
-            'P b2-b1 (invalid)' => [false, new Field('b2'), new Field('b1')],
-            'P b2-a1 (invalid)' => [false, new Field('b2'), new Field('a1')],
-            'P e4-d4 (invalid)' => [false, new Field('e4'), new Field('d4')],
-            'P e4-f4 (invalid)' => [false, new Field('e4'), new Field('f4')],
-            'P h5-f3 (invalid)' => [false, new Field('h5'), new Field('f3')],
-            'P h5-h7 (invalid)' => [false, new Field('h5'), new Field('h7')],
-            'P h5-f7 (invalid)' => [false, new Field('h5'), new Field('f7')],
+        return [
+            'P b2-b3 (valid)' => [true, new Field('b2', $whitePawn), new Field('b3')],
+            'P b2-a3 (valid)' => [true, new Field('b2', $whitePawn), new Field('a3', $blackPawn)],
+            'P b2-c3 (valid)' => [true, new Field('b2', $whitePawn), new Field('c3')],
+            'P d2-d4 (valid)' => [true, new Field('d2', $whitePawn), new Field('d4')],
+            'P h5-h6 (valid)' => [true, new Field('h5', $whitePawn), new Field('h6')],
+            'P h6-g7 (valid)' => [true, new Field('h6', $whitePawn), new Field('g7')],
+            'P g7-g8 (valid)' => [true, new Field('g7', $whitePawn), new Field('g8')],
+            'P g2-g4 (valid)' => [true, new Field('g2', $whitePawn), new Field('g4')],
         ];
+    }
+    public static function invalidMoveProvider()
+    {
+        $whitePawn = new Pawn(Color::WHITE);
+        $whitePawn->hasMoved();
+
+        $blackPawn = new Pawn(Color::BLACK);
+        $blackPawn->hasMoved();
+
+        return [
+            'P a3-a5 (invalid)' => [false, new Field('a3', $whitePawn), new Field('a5')],
+            'P b2-b1 (invalid)' => [false, new Field('b2', $whitePawn), new Field('b1')],
+            'P b2-a1 (invalid)' => [false, new Field('b2', $whitePawn), new Field('a1')],
+            'P e4-d4 (invalid)' => [false, new Field('e4', $whitePawn), new Field('d4')],
+            'P e4-f4 (invalid)' => [false, new Field('e4', $whitePawn), new Field('f4')],
+            'P h5-f3 (invalid)' => [false, new Field('h5', $whitePawn), new Field('f3')],
+            'P h5-h7 (invalid)' => [false, new Field('h5', $whitePawn), new Field('h7')],
+            'P h5-f7 (invalid)' => [false, new Field('h5', $whitePawn), new Field('f7')],
+        ];
+
     }
 }

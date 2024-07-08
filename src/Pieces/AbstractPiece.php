@@ -8,7 +8,7 @@ use Chess\Game\Field;
 
 abstract class AbstractPiece
 {
-    protected bool $isInitialPosition = True;
+    public bool $hasMoved = False;
 
     public function __construct(
         protected Color $color
@@ -25,15 +25,19 @@ abstract class AbstractPiece
         return $this->color;
     }
 
-    public function hasMoved(): void
+    public function markMoved(): void
     {
-        $this->isInitialPosition = False;
+        $this->hasMoved = True;
     }
     
+    public function hasMoved(): bool
+    {
+        return $this->hasMoved;
+    }
     /**
      * @return array[string[]]
      */
-    // abstract public function attacks(Field $fromField): array;
+    abstract public function attackingVectors(Field $fromField): array;
 
     abstract public function isValidMove(Field $fromField, Field $toField): bool;
 }

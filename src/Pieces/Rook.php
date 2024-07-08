@@ -15,4 +15,8 @@ class Rook extends AbstractPiece
         $sameRow = $fromField->getRank() == $toField->getRank();
         return $sameRow || $sameCol;
     }
+    public function attackingVectors(Field $fromField): array
+    {
+        return [];
+    }
 }

@@ -32,7 +32,7 @@ final class KnightTest extends TestCase
 
     #[DataProvider('moveProvider')]
 
-    public function testBlackMove(
+    public function testMove(
         bool $expected,
         Field $fromField,
         Field $toField
@@ -64,6 +64,28 @@ final class KnightTest extends TestCase
             'K d4-g2 (invalid)' => [false, new Field('d4'), new Field('g2')],
             'K d4-a3 (invalid)' => [false, new Field('d4'), new Field('a3')],
             'K d4-c5 (invalid)' => [false, new Field('d4'), new Field('c5')],
+        ];
+    }
+
+    #[DataProvider('attackingVectorsProvider')]
+    public function testAttackingVectors(Field $fromField, array $expectedVectors)
+    {
+        $actualVectors = $this->blackKnight->attackingVectors($fromField);
+
+        $this->assertEqualsCanonicalizing(
+            $expectedVectors,
+            $actualVectors
+        );
+    }
+
+    public static function attackingVectorsProvider()
+    {
+        return [
+            'K a1' => [new Field('a1'), [['b3'], ['c2']]],
+            'K h4' => [new Field('h4'), [['g2'], ['g6'], ['f3'], ['f5']]],
+            'K b4' => [new Field('b4'), [['a6'], ['c6'], ['a2'], ['c2'], ['d5'], ['d3']]],
+            'K e2' => [new Field('e2'), [['d4'], ['f4'], ['c3'], ['c1'], ['g3'], ['g1']]],
+            'K e5' => [new Field('e5'), [['d7'], ['d3'], ['f7'], ['f3'], ['c4'], ['c6'], ['g4'], ['g6']]],
         ];
     }
 }

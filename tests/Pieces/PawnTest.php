@@ -68,10 +68,10 @@ final class PawnTest extends TestCase
     public static function invalidMoveProvider()
     {
         $whitePawn = new Pawn(Color::WHITE);
-        $whitePawn->hasMoved();
+        $whitePawn->markMoved();
 
         $blackPawn = new Pawn(Color::BLACK);
-        $blackPawn->hasMoved();
+        $blackPawn->markMoved();
 
         return [
             'P a3-a5 (invalid)' => [false, new Field('a3', $whitePawn), new Field('a5')],

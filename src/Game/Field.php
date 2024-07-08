@@ -48,7 +48,6 @@ class Field
     {
         $fileCoord = chr($file + ord("a"));
         $rankCoord = chr($rank + ord("1"));
-   
         return $fileCoord . $rankCoord;
     }
 
@@ -79,6 +78,6 @@ class Field
 
     public function isOccupied(): bool
     {
-        return is_bool($this->piece);
+        return !is_null($this->piece);
     }
 }

@@ -46,6 +46,14 @@ final class FieldTest extends TestCase
         );
     }
 
+    public function testIsOccupied()
+    {
+        $field = new Field('a1');
+        $this->assertFalse($field->isOccupied());
+
+        $field->setPiece(new Knight(Color::WHITE));
+        $this->assertTrue($field->isOccupied());
+    }
     public function testSetPiece()
     {
         // given

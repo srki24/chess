@@ -15,6 +15,10 @@ class Bishop extends AbstractPiece
         $rowDelta = abs($fromField->getRank() - $toField->getRank());
         $colDelta = abs($fromField->getFile() - $toField->getFile());
 
-        return ($rowDelta ===  $colDelta );
+        return ($rowDelta ===  $colDelta);
+    }
+    public function attackingVectors(Field $fromField): array
+    {
+        return [];
     }
 }

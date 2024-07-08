@@ -26,7 +26,7 @@ class Pawn extends AbstractPiece
             return true;
         }
         // Advance two squares
-        if ($rankDelta === 2 and $fileDelta === 0 and $this->isInitialPosition) {
+        if (!$this->hasMoved and $rankDelta === 2 and $fileDelta === 0) {
             return true;
         }
 
@@ -39,5 +39,9 @@ class Pawn extends AbstractPiece
         }
 
         return false;
+    }
+    public function attackingVectors(Field $fromField): array
+    {
+        return [];
     }
 }

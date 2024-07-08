@@ -58,10 +58,12 @@ final class BoardTest extends TestCase
 
     public function testValidMove(): void
     {
-        // given
+        // given        
         $rook = new Rook(Color::WHITE);
-        $fromField = new Field('A1', $rook);
-        $toField = new Field('A2', null);
+        
+        $toField = $this->board->getField('a2');
+        $fromField = $this->board->getField('a1');
+        $fromField->setPiece($rook);
 
         // when
         $this->board->move($fromField, $toField);
@@ -71,6 +73,7 @@ final class BoardTest extends TestCase
 
         // and rook moved to the target field
         $this->assertSame($rook, $toField->getPiece());
+
     }
 
     #[DataProvider('existingFieldProvider')]
